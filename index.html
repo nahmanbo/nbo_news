@@ -83,7 +83,7 @@
             padding: 15px;
             border-radius: 10px;
             border: 1px solid #ccc;
-            max-height: 400px; /* הגדרת גובה מקסימלי */
+            max-height: 800px; /* הגדרת גובה מקסימלי */
             overflow-y: auto; /* מאפשר גלילה אם התוכן ארוך מדי */
             display: flex;
             flex-direction: column-reverse; /* מציב את ההודעות האחרונות למעלה */
@@ -146,17 +146,21 @@
 
         // פונקציה לבדוק אם הסיסמה נכונה
         function checkPassword() {
-            var password = "1234"; // הסיסמה הנכונה
-            var userInput = document.getElementById("password-input").value;
-            var errorMessage = document.getElementById("error-message");
+    var password = "1234"; // הסיסמה הנכונה
+    var userInput = document.getElementById("password-input").value;
+    var errorMessage = document.getElementById("error-message");
 
-            if (userInput === password) {
-                document.getElementById("login-container").style.display = "none"; // מסתיר את טופס הסיסמה
-                showChatMessages(); // מציג את תצוגת הצ'אט
-            } else {
-                errorMessage.innerText = "סיסמה שגויה, נסה שוב!";
-            }
-        }
+    if (userInput === password) {
+        // מסתיר את טופס הסיסמה
+        document.getElementById("login-container").style.display = "none"; 
+        document.querySelector(".container").style.display = "none"; // מסתיר את כל הקונטיינר
+
+        showChatMessages(); // מציג את תצוגת הצ'אט
+    } else {
+        errorMessage.innerText = "סיסמה שגויה, נסה שוב!";
+    }
+}
+
 
         // פונקציה להציג את תצוגת הצ'אט ולהוסיף הודעות
         function showChatMessages() {
