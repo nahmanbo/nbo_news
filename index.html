@@ -17,15 +17,9 @@
         }
         header {
             background: #fad02c;
-            color: yellow;
             padding: 0;
-            font-size: 32px;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: center;
-            align-items: center;
         }
         header img {
             margin: 0;
@@ -34,19 +28,18 @@
             height: 80px;
             width: auto;
         }
-
         nav {
             background: #444;
             padding: 10px;
         }
         nav a {
-            color: white;
+            color: #fad02c;
             text-decoration: none;
             margin: 0 15px;
             font-size: 18px;
         }
         .container {
-            margin: 20px;
+            margin: 0px;
             padding: 20px;
             background: white;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -79,29 +72,58 @@
         #chat-container {
             max-width: 500px;
             margin: auto;
-            background-color: #f4f4f4;
+            background-color: #44444427;
             padding: 15px;
             border-radius: 10px;
-            border: 1px solid #ccc;
+            border: 5px solid #fad02c;
             max-height: 800px; /* הגדרת גובה מקסימלי */
             overflow-y: auto; /* מאפשר גלילה אם התוכן ארוך מדי */
             display: flex;
             flex-direction: column-reverse; /* מציב את ההודעות האחרונות למעלה */
         }
         .chat-message {
-            padding: 10px;
+            padding: 10px 10px 30px 10px; /* ריפוד בתחתית כדי להשאיר מקום לשם ולזמן */
             margin-bottom: 10px;
-            background-color: #e1ffc7;
-            border-radius: 8px;
-            max-width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-            font-size: 16px;
-            color: #333;
-        }
-        .message-user {
-            background-color: #d1ecf1;
-        }
+    background-color: #e1ffc7;
+    border-radius: 8px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 16px;
+    color: #333;
+    position: relative; /* לצורך מיקום השם והזמן */
+}
+
+.chat-message .time,
+.chat-message .username {
+    position: absolute;
+    font-size: 12px;
+}
+
+.chat-message .time {
+    left: 10px;
+    bottom: 5px;
+    color: #888;
+}
+
+.chat-message .username {
+    right: 10px;
+    bottom: 5px;
+    color: #888;
+}
+.chat-message .user-image {
+    position: absolute;
+    right: -30px; /* יוצא מהגבול של ההודעה */
+    top: 50%;
+    transform: translateY(-50%); /* ממקם את התמונה במרכז האנכי של ההודעה */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url('abc.jpg'); /* הכנס את הנתיב לתמונה שלך */
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fad02c;
+}
 
     </style>
 </head>
@@ -180,20 +202,45 @@
             addMessage("אני בהחלט אשאר מעודכן! תודה על העדכון.");
         }
 
-        // פונקציה להוסיף הודעה חדשה בצ'אט
-        function addMessage(message) {
-            const chatContainer = document.getElementById("chat-container");
+// פונקציה להוסיף הודעה חדשה בצ'אט
+// פונקציה להוסיף הודעה חדשה בצ'אט
+function addMessage(message) {
+    const chatContainer = document.getElementById("chat-container");
 
-            const messageDiv = document.createElement("div");
-            messageDiv.classList.add("chat-message");
-            messageDiv.innerText = message;
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("chat-message");
 
-            // להוסיף הודעה חדשה
-            chatContainer.appendChild(messageDiv);
+    // קביעת הזמן הנוכחי
+    const now = new Date();
+    const timeString = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
-            // גלול אוטומטית לתחתית הצ'אט
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
+    // יצירת אלמנט לשם
+    const usernameDiv = document.createElement("div");
+    usernameDiv.classList.add("username");
+    usernameDiv.innerText = "נחמן"; // שם המשתמש
+
+    // יצירת אלמנט לזמן
+    const timeDiv = document.createElement("div");
+    timeDiv.classList.add("time");
+    timeDiv.innerText = timeString; // הזמן
+
+    // יצירת אלמנט לתמונה בצורת עיגול
+    const userImageDiv = document.createElement("div");
+    userImageDiv.classList.add("user-image"); // הגדרת מחלקת העיצוב
+
+    // הוספת אלמנטים (תמונה, שם, זמן) להודעה
+    messageDiv.innerText = message;
+    messageDiv.appendChild(userImageDiv); // הוספת תמונה בתוך ההודעה
+    messageDiv.appendChild(usernameDiv); // הוספת שם
+    messageDiv.appendChild(timeDiv); // הוספת זמן
+
+    // הוספת הודעה חדשה
+    chatContainer.appendChild(messageDiv);
+
+    // גלול אוטומטית לתחתית הצ'אט
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
     </script>
 
 </body>
