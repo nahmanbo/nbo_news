@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.png" type="image/x-png">
+
+    <title>NBO news</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,11 +16,25 @@
             text-align: center;
         }
         header {
-            background: #333;
+            background: #fad02c;
             color: yellow;
-            padding: 15px;
-            font-size: 24px;
+            padding: 0;
+            font-size: 32px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+        header img {
+            margin: 0;
+            padding: 0;
+            display: block;
+            height: 80px;
+            width: auto;
+        }
+
         nav {
             background: #444;
             padding: 10px;
@@ -48,28 +65,130 @@
         button:hover {
             background: #218838;
         }
+
+        #login-container {
+            display: block;
+            margin-top: 20px;
+        }
+
+        #content {
+            display: none;
+        }
+
+        /* סגנון לצ'אט */
+        #chat-container {
+            max-width: 500px;
+            margin: auto;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            max-height: 400px; /* הגדרת גובה מקסימלי */
+            overflow-y: auto; /* מאפשר גלילה אם התוכן ארוך מדי */
+            display: flex;
+            flex-direction: column-reverse; /* מציב את ההודעות האחרונות למעלה */
+        }
+        .chat-message {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #e1ffc7;
+            border-radius: 8px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 16px;
+            color: #333;
+        }
+        .message-user {
+            background-color: #d1ecf1;
+        }
+
     </style>
 </head>
 <body>
 
-    <header>My Simple Website</header>
-
+    <!-- תצוגת הכניסה לאתר -->
+    <header>
+        <img src="clear_logo.ico" alt="NBO Logo">
+    </header>
     <nav>
         <a href="#">Home</a>
         <a href="#">About</a>
         <a href="#">Contact</a>
     </nav>
-
+    
     <div class="container">
-        <h1>Welcome to My Website</h1>
-        <p>This is a simple webpage with a header, navigation, and a button.</p>
-        <button onclick="showMessage()">Click Me!</button>
-        <p id="message"></p>
+        <h1>ברוך הבא לאתר!</h1>
+        <p>כדי לגשת לתוכן המוגן, עליך להכניס סיסמה.</p>
+
+        <!-- כפתור לשלב ההזנה של הסיסמה -->
+        <button onclick="showLoginForm()">הזן סיסמה</button>
+
+        <!-- טופס סיסמה, מוסתר בהתחלה -->
+        <div id="login-container" style="display:none;">
+            <h2>הזן סיסמה כדי להיכנס</h2>
+            <input type="password" id="password-input" placeholder="הכנס סיסמה">
+            <button onclick="checkPassword()">כניסה</button>
+            <p id="error-message" style="color: red;"></p>
+        </div>
+    </div>
+
+    <!-- תצוגת הצ'אט -->
+    <div id="chat-container" style="display:none;">
+        <!-- הודעות יצוצו כאן -->
     </div>
 
     <script>
-        function showMessage() {
-            document.getElementById("message").innerText = "Hello! Thanks for visiting 😊";
+        // פונקציה להציג את טופס הסיסמה
+        function showLoginForm() {
+            document.getElementById("login-container").style.display = "block";
+        }
+
+        // פונקציה לבדוק אם הסיסמה נכונה
+        function checkPassword() {
+            var password = "1234"; // הסיסמה הנכונה
+            var userInput = document.getElementById("password-input").value;
+            var errorMessage = document.getElementById("error-message");
+
+            if (userInput === password) {
+                document.getElementById("login-container").style.display = "none"; // מסתיר את טופס הסיסמה
+                showChatMessages(); // מציג את תצוגת הצ'אט
+            } else {
+                errorMessage.innerText = "סיסמה שגויה, נסה שוב!";
+            }
+        }
+
+        // פונקציה להציג את תצוגת הצ'אט ולהוסיף הודעות
+        function showChatMessages() {
+            document.getElementById("chat-container").style.display = "block";
+
+            // מוסיפים הודעות לדוגמה
+            addMessage("שלום! איך אני יכול לעזור לך היום?");
+            addMessage("אני רוצה לדעת יותר על האתר.");
+            addMessage("בכיף! האתר מציע מגוון תכנים. יש משהו מסוים שאתה מחפש?");
+            addMessage("כן, אני מחפש עדכונים אחרונים.");
+            addMessage("הנה! יש לנו כמה חדשות עדכניות. איזה תחום מעניין אותך?");
+            addMessage("אני מחפש חדשות על תחום הטכנולוגיה.");
+            addMessage("נהדר! אנחנו נעדכן אותך על כל חדשות הטכנולוגיה. תודה שביקרת!");
+            addMessage("מה דעתך על ההתפתחויות האחרונות בתחום ה-AI?");
+            addMessage("אני חושב שזה העתיד! יש עוד חדשות בעניין?");
+            addMessage("כן, אנחנו מעדכנים כל הזמן על חידושי טכנולוגיה בתחום זה. תשאר מעודכן!");
+            addMessage("אני בהחלט אשאר מעודכן! תודה על העדכון.");
+        }
+
+        // פונקציה להוסיף הודעה חדשה בצ'אט
+        function addMessage(message) {
+            const chatContainer = document.getElementById("chat-container");
+
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("chat-message");
+            messageDiv.innerText = message;
+
+            // להוסיף הודעה חדשה
+            chatContainer.appendChild(messageDiv);
+
+            // גלול אוטומטית לתחתית הצ'אט
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
     </script>
 
